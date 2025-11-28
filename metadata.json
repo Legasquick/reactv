@@ -1,0 +1,7 @@
+{
+  "name": "Vitruvius Beta 2",
+  "description": "Цифровой лист персонажа для НРИ с поддержкой инвентаря, доменов, QR-кодов и печати.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
