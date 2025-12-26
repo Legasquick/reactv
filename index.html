@@ -1,154 +1,194 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Витрувий Beta 2 | Refactored</title>
-  
+
   <!-- Подключение Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+
   <!-- Подключение шрифтов (Cinzel для заголовков, Inter для интерфейса, Merriweather для рукописного текста) -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;600;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
-  
+
   <!-- Кастомные стили, которые сложно реализовать только утилитами Tailwind -->
   <style>
-    :root { 
-        --safe-bottom: env(safe-area-inset-bottom, 0px); 
+    :root {
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
-    
+
     /* Базовые настройки тела страницы */
-    body { 
-      background-color: #e7e5e4; 
-      font-family: 'Inter', sans-serif; 
-      color: #1c1917; 
-      padding-bottom: calc(90px + var(--safe-bottom)); 
-      overscroll-behavior-y: none; 
+    body {
+      background-color: #e7e5e4;
+      font-family: 'Inter', sans-serif;
+      color: #1c1917;
+      padding-bottom: calc(90px + var(--safe-bottom));
+      overscroll-behavior-y: none;
     }
-    
-    @media (min-width: 768px) { 
-      body { padding-bottom: 0; overscroll-behavior-y: auto; } 
+
+    /* Dark Mode Body Override */
+    .dark body {
+      background-color: #0c0a09; /* stone-950 */
+      color: #e7e5e4; /* stone-200 */
     }
-    
+
+    @media (min-width: 768px) {
+      body { padding-bottom: 0; overscroll-behavior-y: auto; }
+    }
+
     /* Классы шрифтов */
     .font-header { font-family: 'Cinzel', serif; }
     .font-hand { font-family: 'Merriweather', serif; }
-    
+
     /* --- GHOST INPUTS (Призрачные поля) --- */
     /* Поля ввода, которые выглядят как текст, пока на них не наведешь мышь */
     .ghost-input {
-        border: 1px solid transparent;
-        border-radius: 4px;
-        transition: all 0.2s;
-        background-color: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      transition: all 0.2s;
+      background-color: transparent;
     }
     .ghost-input:hover {
-        border-color: #a8a29e; /* Stone-400 */
-        background-color: rgba(255,255,255,0.4);
+      border-color: #a8a29e; /* Stone-400 */
+      background-color: rgba(255,255,255,0.4);
+    }
+    .dark .ghost-input:hover {
+      border-color: #57534e; /* Stone-600 */
+      background-color: rgba(255,255,255,0.05);
     }
     .ghost-input:focus {
-        border-color: #1c1917; /* Stone-900 */
-        outline: none;
-        background-color: rgba(255,255,255,0.9);
-        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      border-color: #1c1917; /* Stone-900 */
+      outline: none;
+      background-color: rgba(255,255,255,0.9);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .dark .ghost-input:focus {
+      border-color: #d6d3d1; /* Stone-300 */
+      background-color: rgba(0,0,0,0.5);
     }
 
     /* Стандартные поля ввода (для мелких цифр в карточках) */
     .std-input {
-        border: 1px solid #d6d3d1;
-        border-radius: 4px;
-        padding: 0 4px;
-        background-color: rgba(255,255,255,0.8);
+      border: 1px solid #d6d3d1;
+      border-radius: 4px;
+      padding: 0 4px;
+      background-color: rgba(255,255,255,0.8);
+    }
+    .dark .std-input {
+      border-color: #44403c; /* Stone-700 */
+      background-color: rgba(0,0,0,0.3);
+      color: #e5e5e5;
     }
     .std-input:focus { border-color: #1c1917; outline: none; }
+    .dark .std-input:focus { border-color: #a8a29e; }
 
     /* --- СТИЛИ КАРТОЧКИ --- */
     /* Основной контейнер карточки способности/предмета */
     .rpg-card {
-        width: 100%;
-        min-height: 280px;
-        height: auto; /* Разрешаем растягиваться */
-        background: white;
-        display: flex; flex-direction: column; 
-        border: 2px solid #1c1917; 
-        overflow: hidden; position: relative; 
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); 
-        transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      width: 100%;
+      min-height: 280px;
+      height: auto; /* Разрешаем растягиваться */
+      background: white;
+      display: flex; flex-direction: column;
+      border: 2px solid #1c1917;
+      overflow: hidden; position: relative;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
     }
+    .dark .rpg-card {
+      background: #292524; /* stone-800 */
+      border-color: #57534e; /* stone-600 */
+    }
+
     .rpg-card.locked { opacity: 0.6; filter: grayscale(0.8); } /* Закрытая (недоступная) карточка */
-    .rpg-card.purchased { 
-      box-shadow: 0 0 0 4px #10b981, 0 10px 15px -3px rgba(0,0,0,0.2); 
-      transform: translateY(-2px); 
-      border-color: #059669; 
+    .rpg-card.purchased {
+      box-shadow: 0 0 0 4px #10b981, 0 10px 15px -3px rgba(0,0,0,0.2);
+      transform: translateY(-2px);
+      border-color: #059669;
     } /* Купленная карточка */
-    
+
     .rpg-card:hover { transform: translateY(-4px); z-index: 10; box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
 
     /* Внутренние элементы карточки */
-    .card-header { 
-        padding: 6px 8px; display: flex; align-items: center; gap: 8px; 
-        border-bottom: 2px solid #1c1917; 
-        min-height: 50px; 
-        height: auto; /* Разрешаем растягиваться по высоте */
+    .card-header {
+      padding: 6px 8px; display: flex; align-items: center; gap: 8px;
+      border-bottom: 2px solid #1c1917;
+      min-height: 50px;
+      height: auto; /* Разрешаем растягиваться по высоте */
     }
-    .card-title { 
-        flex: 1; 
-        min-width: 0; /* Фикс для flexbox */
-        font-family: 'Cinzel', serif; font-weight: 900; 
-        font-size: 16px; line-height: 1.1; 
-        text-transform: uppercase; color: white; text-shadow: 1px 1px 0 #000;
-        white-space: pre-wrap; /* Перенос слов */
-        word-wrap: break-word;
+    .dark .card-header { border-bottom-color: #57534e; }
+
+    .card-title {
+      flex: 1;
+      min-width: 0; /* Фикс для flexbox */
+      font-family: 'Cinzel', serif; font-weight: 900;
+      font-size: 16px; line-height: 1.1;
+      text-transform: uppercase; color: white; text-shadow: 1px 1px 0 #000;
+      white-space: pre-wrap; /* Перенос слов */
+      word-wrap: break-word;
     }
     .card-icon { width: 28px; height: 28px; display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 4px; flex-shrink: 0; }
     .card-icon svg { width: 18px; height: 18px; stroke: white; stroke-width: 2; }
-    
-    .card-subtitle { 
-        padding: 4px 8px; 
-        font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700; 
-        text-transform: uppercase; letter-spacing: 1px; 
-        border-bottom: 1px solid #1c1917; color: rgba(255,255,255,0.95);
-        white-space: pre-wrap;
+
+    .card-subtitle {
+      padding: 4px 8px;
+      font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      border-bottom: 1px solid #1c1917; color: rgba(255,255,255,0.95);
+      white-space: pre-wrap;
     }
-    .card-content { 
-        flex: 1; 
-        padding: 8px 10px; 
-        font-family: 'Merriweather', serif; font-size: 11px; line-height: 1.4; 
-        color: #1c1917; background-color: #fff; 
-        display: flex; flex-direction: column;
+    .dark .card-subtitle { border-bottom-color: #57534e; }
+
+    .card-content {
+      flex: 1;
+      padding: 8px 10px;
+      font-family: 'Merriweather', serif; font-size: 11px; line-height: 1.4;
+      color: #1c1917; background-color: #fff;
+      display: flex; flex-direction: column;
+    }
+    .dark .card-content {
+      background-color: #292524; /* stone-800 */
+      color: #e7e5e4; /* stone-200 */
     }
 
     /* --- ANIMATIONS --- */
     @keyframes floatUp {
-        0% { opacity: 0; transform: translateY(50px) scale(0.5); }
-        20% { opacity: 1; transform: translateY(0) scale(1.1); }
-        80% { opacity: 1; transform: translateY(-10px) scale(1); }
-        100% { opacity: 0; transform: translateY(-50px) scale(0.9); }
+      0% { opacity: 0; transform: translateY(50px) scale(0.5); }
+      20% { opacity: 1; transform: translateY(0) scale(1.1); }
+      80% { opacity: 1; transform: translateY(-10px) scale(1); }
+      100% { opacity: 0; transform: translateY(-50px) scale(0.9); }
     }
     @keyframes floatUpOut {
-        0% { opacity: 1; transform: translateY(0) scale(1); }
-        100% { opacity: 0; transform: translateY(-100px) scale(0.5); }
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-100px) scale(0.5); }
     }
     @keyframes burst {
-        0% { transform: scale(0); opacity: 0; }
-        50% { opacity: 0.5; }
-        100% { transform: scale(3); opacity: 0; }
+      0% { transform: scale(0); opacity: 0; }
+      50% { opacity: 0.5; }
+      100% { transform: scale(3); opacity: 0; }
     }
     @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-        20%, 40%, 60%, 80% { transform: translateX(5px); }
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
     }
     @keyframes popIn {
-        0% { opacity: 0; transform: scale(0.5); }
-        60% { opacity: 1; transform: scale(1.1); }
-        100% { opacity: 1; transform: scale(1); }
+      0% { opacity: 0; transform: scale(0.5); }
+      60% { opacity: 1; transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
     }
     @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-    
+
     .anim-float-up { animation: floatUp 2.5s ease-out forwards; }
     .anim-float-out { animation: floatUpOut 0.8s ease-in forwards; }
     .anim-burst { animation: burst 0.8s ease-out infinite; }
@@ -158,32 +198,33 @@
     /* --- НАСТРОЙКИ ПЕЧАТИ --- */
     @media print {
       @page { size: A4; margin: 0; }
-      body { background: white; margin: 0; padding: 0; }
+      body { background: white; margin: 0; padding: 0; color: black; }
       .no-print { display: none !important; }
       .sheet-page { width: 210mm !important; min-height: 297mm !important; margin: 0 auto !important; padding: 10mm 12mm !important; box-shadow: none !important; page-break-after: always; }
       input, textarea { border: none !important; resize: none; background: transparent !important; }
       .rpg-card { page-break-inside: avoid; border: 1px solid #000 !important; box-shadow: none !important; min-height: auto; }
       .rpg-card.locked { opacity: 0.3; }
+      /* Force light mode styles for print */
+      .dark body { background-color: white; color: black; }
+      .dark .rpg-card { background: white; border-color: black; }
+      .dark .card-content { background-color: white; color: black; }
     }
   </style>
-
-<link rel="stylesheet" href="/index.css">
-<script type="importmap">
-{
-  "imports": {
-    "qrcode": "https://aistudiocdn.com/qrcode@^1.5.4",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "lz-string": "https://aistudiocdn.com/lz-string@^1.5.0",
-    "html5-qrcode": "https://aistudiocdn.com/html5-qrcode@^2.3.8",
-    "firebase/": "https://aistudiocdn.com/firebase@^12.6.0/"
-  }
-}
-</script>
-  <script type="module" crossorigin src="/reactv/assets/index-BnweN1mx.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "qrcode": "https://aistudiocdn.com/qrcode@^1.5.4",
+        "react/": "https://aistudiocdn.com/react@^19.2.0/",
+        "react": "https://aistudiocdn.com/react@^19.2.0",
+        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+        "lz-string": "https://aistudiocdn.com/lz-string@^1.5.0",
+        "html5-qrcode": "https://aistudiocdn.com/html5-qrcode@^2.3.8",
+        "firebase/": "https://aistudiocdn.com/firebase@^12.6.0/"
+      }
+    }
+  </script>
 </head>
 <body>
-  <div id="root"></div>
+<div id="root"></div>
 </body>
 </html>
