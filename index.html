@@ -42,33 +42,14 @@
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
 
-    /* --- SCROLLBAR STYLING --- */
-    /* Vertical Scrollbar: Hidden (Width 0) */
-    ::-webkit-scrollbar:vertical {
-      width: 0px;
-      background: transparent;
+    /* Скрываем скроллбары глобально для всех элементов */
+    ::-webkit-scrollbar {
+      display: none;
     }
 
-    /* Horizontal Scrollbar: Visible (Thin) */
-    ::-webkit-scrollbar:horizontal {
-      height: 6px;
-      background: transparent;
-    }
-
-    /* Scrollbar Thumb (The moving part) */
-    ::-webkit-scrollbar-thumb {
-      background-color: rgba(28, 25, 23, 0.2); /* Stone-900 with opacity */
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background-color: rgba(28, 25, 23, 0.4);
-    }
-
-    .dark ::-webkit-scrollbar-thumb {
-      background-color: rgba(231, 229, 228, 0.2); /* Stone-200 with opacity */
-    }
-    .dark ::-webkit-scrollbar-thumb:hover {
-      background-color: rgba(231, 229, 228, 0.4);
+    html, body, * {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
     }
 
     /* Базовые настройки тела страницы */
@@ -272,7 +253,7 @@
       }
     }
   </script>
-  <script type="module" crossorigin src="/reactv/assets/index-BvIjmXr9.js"></script>
+  <script type="module" crossorigin src="/reactv/assets/index-Xs06Jjlb.js"></script>
 </head>
 <body>
 <div id="root"></div>
