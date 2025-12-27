@@ -33,10 +33,10 @@
       overscroll-behavior-y: none;
     }
 
-    /* Dark Mode Body Override */
+    /* Dark Mode Body Override - PURE BLACK */
     .dark body {
-      background-color: #0c0a09; /* stone-950 */
-      color: #e7e5e4; /* stone-200 */
+      background-color: #000000;
+      color: #e7e5e4;
     }
 
     @media (min-width: 768px) {
@@ -70,8 +70,9 @@
       box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
     .dark .ghost-input:focus {
-      border-color: #d6d3d1; /* Stone-300 */
-      background-color: rgba(0,0,0,0.5);
+      border-color: #57534e; /* Stone-600 */
+      background-color: #1c1917;
+      color: white;
     }
 
     /* Стандартные поля ввода (для мелких цифр в карточках) */
@@ -83,7 +84,7 @@
     }
     .dark .std-input {
       border-color: #44403c; /* Stone-700 */
-      background-color: rgba(0,0,0,0.3);
+      background-color: rgba(0,0,0,0.5);
       color: #e5e5e5;
     }
     .std-input:focus { border-color: #1c1917; outline: none; }
@@ -103,8 +104,8 @@
       transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
     }
     .dark .rpg-card {
-      background: #292524; /* stone-800 */
-      border-color: #57534e; /* stone-600 */
+      background: #1c1917; /* stone-900 */
+      border-color: #44403c; /* stone-700 */
     }
 
     .rpg-card.locked { opacity: 0.6; filter: grayscale(0.8); } /* Закрытая (недоступная) карточка */
@@ -123,7 +124,7 @@
       min-height: 50px;
       height: auto; /* Разрешаем растягиваться по высоте */
     }
-    .dark .card-header { border-bottom-color: #57534e; }
+    .dark .card-header { border-bottom-color: #44403c; }
 
     .card-title {
       flex: 1;
@@ -144,7 +145,7 @@
       border-bottom: 1px solid #1c1917; color: rgba(255,255,255,0.95);
       white-space: pre-wrap;
     }
-    .dark .card-subtitle { border-bottom-color: #57534e; }
+    .dark .card-subtitle { border-bottom-color: #44403c; }
 
     .card-content {
       flex: 1;
@@ -154,8 +155,8 @@
       display: flex; flex-direction: column;
     }
     .dark .card-content {
-      background-color: #292524; /* stone-800 */
-      color: #e7e5e4; /* stone-200 */
+      background-color: #1c1917; /* stone-900 */
+      color: #e5e5e5; /* stone-200 */
     }
 
     /* --- ANIMATIONS --- */
@@ -224,7 +225,7 @@
       }
     }
   </script>
-  <script type="module" crossorigin src="/reactv/assets/index-DOL-LAdq.js"></script>
+  <script type="module" crossorigin src="/reactv/assets/index-DG2ghV6n.js"></script>
 </head>
 <body>
 <div id="root"></div>
