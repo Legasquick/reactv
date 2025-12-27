@@ -1,0 +1,24 @@
+﻿
+{
+  "name": "mrpg engine",
+  "short_name": "mrpg engine",
+  "description": "Цифровой лист персонажа для НРИ с поддержкой инвентаря, доменов и QR-кодов.",
+  "start_url": "/reactv/",
+  "scope": "/reactv/",
+  "display": "standalone",
+  "background_color": "#e7e5e4",
+  "theme_color": "#1c1917",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://i.yapx.ru/cavYk.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.yapx.ru/cavYk.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
